@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
+import Link from "next/link";
 
 const pretendard = localFont({
   src: "../app/fonts/PretendardVariable.woff2",
@@ -21,7 +22,49 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${pretendard.variable} antialiased`}>{children}</body>
+      <body
+        className={`${pretendard.variable} antialiased flex flex-col min-h-screen`}
+      >
+        <header className="header border-b">
+          <div className="con mx-auto flex h-20 px-10 justify-between">
+            <div className="logo-box">
+              <Link
+                href={"/"}
+                className="text-2xl flex h-full items-center font-bold"
+              >
+                📚 리액트 SB앱
+              </Link>
+            </div>
+            <nav className="menu-box">
+              <ul className="flex h-full gap-x-4">
+                <li>
+                  <Link
+                    href={"/post/write"}
+                    className="flex h-full items-center"
+                  >
+                    글 쓰기
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={"/post/list"}
+                    className="flex h-full items-center"
+                  >
+                    글 목록
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+            <div className="header-util-wrap"></div>
+          </div>
+        </header>
+        <main className="flex-1 flex">{children}</main>
+        <footer className="footer bg-[#afafaf] flex items-center justify-center h-20">
+          <div className="inner text-2xl">
+            2025 © 리액트 SB앱. All rights reserved.
+          </div>
+        </footer>
+      </body>
     </html>
   );
 }
