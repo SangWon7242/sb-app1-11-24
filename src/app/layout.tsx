@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import localFont from "next/font/local";
+
+const pretendard = localFont({
+  src: "../app/fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "100 900",
+  variable: "--font-pretendard",
+});
 
 export const metadata: Metadata = {
   title: "리액트 SB앱",
@@ -13,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="antialiased">{children}</body>
+      <body className={`${pretendard.variable} antialiased`}>{children}</body>
     </html>
   );
 }
