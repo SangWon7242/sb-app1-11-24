@@ -10,6 +10,7 @@ export async function createClient() {
     {
       cookies: {
         getAll() {
+          // 쿠키 읽기
           return cookieStore.getAll();
         },
         setAll(cookiesToSet) {

@@ -1,4 +1,5 @@
 import { createClient } from "@/app/utils/supabase/server";
+import Link from "next/link";
 
 export default async function PostListPage() {
   const supabase = await createClient();
@@ -7,7 +8,7 @@ export default async function PostListPage() {
   const { data, error } = await supabase.from("post").select("*");
 
   if (error) {
-    console.log(error);
+    console.error("게시물 리스트 조회 에러 :", error);
     return;
   }
 
@@ -17,7 +18,9 @@ export default async function PostListPage() {
       <nav className="post-list">
         <ul>
           {data.map((post) => (
-            <li key={post.id}>{post.title}</li>
+            <li key={post.id}>
+              <Link href={`/post/${post.id}`}>{post.title}</Link>
+            </li>
           ))}
         </ul>
       </nav>
