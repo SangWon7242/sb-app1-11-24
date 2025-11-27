@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Post } from "@/app/types/post";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { createClient } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 
+// 브라우저용으로 기본 Supabase 클라이언트를 직접 생성
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
