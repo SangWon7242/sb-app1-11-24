@@ -1,45 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import MDEditor from "@uiw/react-md-editor";
 import { useSaveShortCut } from "@/app/hooks/useSaveShortCut";
-
-// 브라우저용으로 기본 Supabase 클라이언트를 직접 생성
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-);
+import { usePost } from "@/app/hooks/usePost";
 
 export default function PostWritePage() {
   const router = useRouter();
+
+  const { createPost } = usePost();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const handleWrite = async () => {
-    if (!title.trim()) {
-      alert("제목을 입력해주세요.");
-      return;
-    }
+    if (!title.trim()) return alert("제목을 입력해주세요.");
+    if (!content.trim()) return alert("내용을 입력해주세요.");
 
-    if (!content.trim()) {
-      alert("내용을 입력해주세요.");
-      return;
-    }
-
-    const { error } = await supabase.from("post").insert({
-      title,
-      content,
-    });
-
-    if (error) {
-      console.log(error);
-      alert("글 저장 중 오류 발생!!");
-      return;
-    }
+    createPost(title, content);
 
     setTitle("");
     setContent("");

@@ -80,6 +80,10 @@ export default function PostEditPage({
 
   useSaveShortCut(handleEdit, [title, content]);
 
+  if (loading) {
+    return <div>로딩중...</div>;
+  }
+
   return (
     <>
       <section className="post-write-section flex flex-col w-full ">
