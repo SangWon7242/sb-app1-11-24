@@ -2,6 +2,8 @@ import { createClient } from "@/app/utils/supabase/server";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/app/utils/dateForatter";
 import MarkdownViewer from "@/components/MarkdownViewer";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default async function PostDetailPage({
   params,
@@ -34,6 +36,9 @@ export default async function PostDetailPage({
       <div>제목 : {post.title}</div>
       <div>내용</div>
       <MarkdownViewer content={post.content} />
+      <Button>
+        <Link href={`/post/edit/${post.id}`}>수정</Link>
+      </Button>
     </section>
   );
 }
