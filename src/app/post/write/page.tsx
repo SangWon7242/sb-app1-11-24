@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { createClient } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import MDEditor from "@uiw/react-md-editor";
+import { useSaveShortCut } from "@/app/hooks/useSaveShortCut";
 
 // 브라우저용으로 기본 Supabase 클라이언트를 직접 생성
 const supabase = createClient(
@@ -47,22 +48,7 @@ export default function PostWritePage() {
     router.push("/");
   };
 
-  useEffect(() => {
-    const saveKeyDown = (e: KeyboardEvent) => {
-      // Ctrl + s, cmd + s
-      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
-        e.preventDefault(); // 브라우저에서 ctrl + s 눌렀을 때 기본 이벤트를 막음
-        handleWrite();
-      }
-    };
-
-    window.addEventListener("keydown", saveKeyDown);
-
-    // 클린업 함수
-    return () => {
-      window.removeEventListener("keydown", saveKeyDown);
-    };
-  }, [title, content]);
+  useSaveShortCut(handleWrite, [title, content]);
 
   return (
     <>

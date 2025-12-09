@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import MDEditor from "@uiw/react-md-editor";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useSaveShortCut } from "@/app/hooks/useSaveShortCut";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -77,22 +78,7 @@ export default function PostEditPage({
     router.push(`/post/${id}`);
   };
 
-  useEffect(() => {
-    const saveKeyDown = (e: KeyboardEvent) => {
-      // Ctrl + s, cmd + s
-      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
-        e.preventDefault(); // 브라우저에서 ctrl + s 눌렀을 때 기본 이벤트를 막음
-        handleEdit();
-      }
-    };
-
-    window.addEventListener("keydown", saveKeyDown);
-
-    // 클린업 함수
-    return () => {
-      window.removeEventListener("keydown", saveKeyDown);
-    };
-  }, [title, content]);
+  useSaveShortCut(handleEdit, [title, content]);
 
   return (
     <>
