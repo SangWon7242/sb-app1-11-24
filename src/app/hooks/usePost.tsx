@@ -48,7 +48,7 @@ export const usePost = () => {
 
   // 게시물 수정
   const modifyPost = async (
-    id: string,
+    id: number,
     title: string,
     content: string
   ): Promise<Post | null> => {
