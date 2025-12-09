@@ -46,9 +46,39 @@ export const usePost = () => {
     }
   };
 
+  // 게시물 수정
+  const modifyPost = async (
+    id: string,
+    title: string,
+    content: string
+  ): Promise<Post | null> => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const { data, error } = await supabase
+        .from("post")
+        .update({ title, content })
+        .eq("id", id)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      return data;
+    } catch (err) {
+      const errMsg = "글 수정 중 오류 발생!";
+      setError(errMsg);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     error,
     createPost,
+    modifyPost,
   };
 };

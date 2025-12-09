@@ -8,6 +8,7 @@ import MDEditor from "@uiw/react-md-editor";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useSaveShortCut } from "@/app/hooks/useSaveShortCut";
+import { usePost } from "@/app/hooks/usePost";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -20,6 +21,9 @@ export default function PostEditPage({
   params: Promise<{ id: string }>;
 }) {
   const router = useRouter();
+
+  const { modifyPost } = usePost();
+
   const [loading, setLoading] = useState(true);
   const [id, setId] = useState("");
   const [title, setTitle] = useState("");
@@ -61,18 +65,9 @@ export default function PostEditPage({
     if (!title.trim()) return alert("제목을 입력해주세요.");
     if (!content.trim()) return alert("내용을 입력해주세요.");
 
-    // UPDATE post SET title = ?, content = ? WHERE id = ?;
-    const { error } = await supabase
-      .from("post")
-      .update({ title, content })
-      .eq("id", id)
-      .select()
-      .single();
+    const post = await modifyPost(id, title, content);
 
-    if (error) {
-      console.error("게시물 수정 실패 :", error);
-      return;
-    }
+    if (!post) return alert("글 수정에 실패했습니다.");
 
     alert(`${id}번 게시물이 수정되었습니다.`);
     router.push(`/post/${id}`);
