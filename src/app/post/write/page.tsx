@@ -20,12 +20,13 @@ export default function PostWritePage() {
     if (!title.trim()) return alert("제목을 입력해주세요.");
     if (!content.trim()) return alert("내용을 입력해주세요.");
 
-    createPost(title, content);
+    const post = await createPost(title, content);
+    if (!post) return alert("글 작성에 실패했습니다.");
 
     setTitle("");
     setContent("");
 
-    alert("글이 작성되었습니다.");
+    alert(`${post.id}번 글이 작성되었습니다.`);
     router.push("/");
   };
 
