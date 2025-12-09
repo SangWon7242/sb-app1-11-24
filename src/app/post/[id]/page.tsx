@@ -1,5 +1,6 @@
 import { createClient } from "@/app/utils/supabase/server";
 import { notFound } from "next/navigation";
+import { formatDate } from "@/app/utils/dateForatter";
 
 export default async function PostDetailPage({
   params,
@@ -28,7 +29,7 @@ export default async function PostDetailPage({
   return (
     <section>
       <div>번호 : {post.id}</div>
-      <div>작성날짜 : {post.created_at}</div>
+      <div>작성날짜 : {formatDate(post.created_at)}</div>
       <div>제목 : {post.title}</div>
       <div>내용 : {post.content}</div>
     </section>
